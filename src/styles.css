@@ -12,8 +12,12 @@
   background : #EAF0F1;
 }
 
+.color1{
+  background : #B83227;
+}
+
 body {
   /* background: #343a40; */
-  background : #EAF0F1;
+  background : #fff;
   color : #282c3f;
 }
