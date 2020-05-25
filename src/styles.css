@@ -4,6 +4,16 @@
   border-radius: 0px;
 }
 
+.bg1 {
+  background : #fff;
+}
+
+.bg2 {
+  background : #EAF0F1;
+}
+
 body {
-  background: #343a40;
+  /* background: #343a40; */
+  background : #EAF0F1;
+  color : #282c3f;
 }
