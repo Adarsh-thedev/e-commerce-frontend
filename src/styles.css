@@ -9,15 +9,11 @@
 }
 
 .bg2 {
-  background : #EAF0F1;
-}
-
-.color1{
-  background : #B83227;
+  background : #F2F3F5;
 }
 
 body {
   /* background: #343a40; */
-  background : #fff;
+  background : #F2F3F5;
   color : #282c3f;
 }
