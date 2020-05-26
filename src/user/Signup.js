@@ -1,29 +1,99 @@
 import React, {useState} from 'react';
 import Base from '../core/Base';
 import {Link} from 'react-router-dom';
+import { signup } from '../auth/helper/index';
 
 const Signup = () => {
+    const [values, setValues] = useState({
+        name : '',
+        email : '',
+        password : '',
+        error : '',
+        success : false
+    });
+
+    const {name, email, password, error, success} = values;
+
+    const handleChange = name => event => {
+        setValues({...values, error : false, [name] : event.target.value});
+    }
+
+    const onSubmit = (event) => {
+        event.preventDefault();
+        setValues({...values, error : false})
+        signup({name, email, password})
+        .then(data => {
+            if(data.error) {
+                setValues({...values, error : data.error, success : false});
+            } else {
+                setValues({
+                    ...values,
+                    name : '',
+                    email : '',
+                    password : '',
+                    error : '',
+                    success : true
+                })
+            }
+        })
+        .catch(console.log('error in signup'));
+    }
+
+    const successMessage = () => {
+        return(
+            <div 
+                className = 'alert alert-success'
+                style = {{display : success ? '' : 'none'}}
+            >
+                New account was created successfully. Please <Link to = '/signin'>Login Here</Link>
+            </div>
+        );
+    }
+
+    const errorMessage = () => {
+        return(
+            <div 
+                className = 'alert alert-danger'
+                style = {{display : error ? '' : 'none'}}
+            >
+                {error}
+            </div>
+        );
+    }
+
     const signUpForm = () => {
         return(
             <div className="container">
-                <div className="pa4 black-80 br1 shadow-3 bg2 col-12 col-md6">
+                <div className="pa4 black-80 br1 shadow-3 bg1 col-12 col-md-6 offset-md-3">
                     <form className="measure center">
                         <div  className="ba b--transparent ph0 mh0">
                         <div className="mt3">
                                 <label className="db fw6 lh-copy f6">Name</label>
-                                <input className="pa2 input-reset ba bg2 hover-bg-black hover-white w-100" type="text"/>
+                                <input 
+                                    onChange = {handleChange('name')}
+                                    value = {name}
+                                    className="pa2 input-reset ba bg2 hover-bg-black hover-white w-100" type="text"
+                                />
                             </div>
                             <div className="mt3">
                                 <label className="db fw6 lh-copy f6">Email</label>
-                                <input className="pa2 input-reset ba bg2 hover-bg-black hover-white w-100" type="email"/>
+                                <input
+                                    onChange = {handleChange('email')}
+                                    value = {email}
+                                    className="pa2 input-reset ba bg2 hover-bg-black hover-white w-100" type="email"
+                                />
                             </div>
                             <div className="mv3">
                                 <label className="db fw6 lh-copy f6">Password</label>
-                                <input className="b pa2 input-reset ba bg2 hover-bg-black hover-white w-100" type="password"/>
+                                <input 
+                                    onChange = {handleChange('password')}
+                                    value = {password}
+                                    className="b pa2 input-reset ba bg2 hover-bg-black hover-white w-100" type="password"
+                                />
                             </div>
                         </div>
                         <div>
-                            <button className="btn btn-block btn-success grow pointer f6 br1">
+                            <button onClick = {onSubmit} className="btn btn-block bg-green grow pointer f6 br1">
                                 Submit
                             </button>
                         </div>
@@ -35,7 +105,10 @@ const Signup = () => {
 
     return(
         <Base title = 'Signup Page' description = 'User Signup'>
+            {successMessage()}
+            {errorMessage()}
             {signUpForm()}
+            <p className = 'tc'>{JSON.stringify(values)}</p>
         </Base>
     );
 }
