@@ -20,7 +20,7 @@ const Signup = () => {
 
     const onSubmit = (event) => {
         event.preventDefault();
-        setValues({...values, error : false})
+        setValues({...values, error : false});
         signup({name, email, password})
         .then(data => {
             if(data.error) {
@@ -36,28 +36,37 @@ const Signup = () => {
                 })
             }
         })
-        .catch(console.log('error in signup'));
+        .catch(error =>console.log(error));
     }
 
     const successMessage = () => {
         return(
-            <div 
-                className = 'alert alert-success'
-                style = {{display : success ? '' : 'none'}}
-            >
-                New account was created successfully. Please <Link to = '/signin'>Login Here</Link>
+            <div className="row">
+                <div className="col-md-6 offset-sm-3 text-left">
+                    <div 
+                        className = 'alert alert-success'
+                        style = {{display : success ? '' : 'none'}}
+                    >
+                        New account was created successfully. Please <Link to = '/signin'>Login Here</Link>
+                    </div>
+                </div>
             </div>
         );
     }
 
     const errorMessage = () => {
         return(
-            <div 
-                className = 'alert alert-danger'
-                style = {{display : error ? '' : 'none'}}
-            >
-                {error}
+            <div className="row">
+                <div className="col-md-6 offset-sm-3 text-left">
+                    <div 
+                        className = 'alert alert-danger'
+                        style = {{display : error ? '' : 'none'}}
+                    >
+                        {error}
+                    </div>
+                </div>
             </div>
+
         );
     }
 
@@ -108,7 +117,6 @@ const Signup = () => {
             {successMessage()}
             {errorMessage()}
             {signUpForm()}
-            <p className = 'tc'>{JSON.stringify(values)}</p>
         </Base>
     );
 }
