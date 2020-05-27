@@ -19,13 +19,13 @@ const Base = ({
                     {children}
                 </div>
             </div>
-            <footer className = 'footer py3 bg1'>
+            <footer className = 'footer py3 bg3'>
                 <div className = 'container-fluid text-center py-3'>
                     <h4>If you got any question, feel free to reach out</h4>
-                    <button className = 'btn bg-red btn-lg br2 grow'>Contact Us</button>
+                    <button className = 'btn bg1 btn-lg br2 grow'>Contact Us</button>
                 </div>
                 <div className = 'container'>
-                    <span className = 'text-muted'>A T-shirt Hub</span>
+                    <span className = 'text-muted'>A <span className = 'blue'>T-shirt </span>Hub</span>
                 </div>
             </footer>
         </div>

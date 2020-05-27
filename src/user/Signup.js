@@ -73,7 +73,7 @@ const Signup = () => {
     const signUpForm = () => {
         return(
             <div className="container">
-                <div className="pa4 black-80 br1 shadow-3 bg1 col-12 col-md-6 offset-md-3">
+                <div className="pa4 black-80 br2 shadow-3 bg3 col-12 col-md-6 offset-md-3">
                     <form className="measure center">
                         <div  className="ba b--transparent ph0 mh0">
                         <div className="mt3">
@@ -102,7 +102,7 @@ const Signup = () => {
                             </div>
                         </div>
                         <div>
-                            <button onClick = {onSubmit} className="btn btn-block bg-green grow pointer f6 br1">
+                            <button onClick = {onSubmit} className="btn btn-block bg1 grow pointer f6 br2">
                                 Submit
                             </button>
                         </div>
