@@ -130,7 +130,6 @@ const Signin = () => {
             {errorMessage()}
             {signInForm()}
             {performReDirect()}
-            <p className = 'f6 text-center'>{JSON.stringify(values)}</p>
         </Base>
     );
 }
