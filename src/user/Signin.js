@@ -14,7 +14,7 @@ const Signin = () => {
 
     const {email, password, error, loading, didRedirect} = values;
 
-    const {user} = isAuthenticated;
+    const {user} = isAuthenticated();
 
     const handleChange = name => event => {
         setValues({...values, error : false, [name] : event.target.value});
@@ -39,10 +39,6 @@ const Signin = () => {
                 authenticate(data, ()=> {
                     setValues({
                         ...values,
-                        email : '',
-                        password : '',
-                        error : false,
-                        didRedirect : false,
                         didRedirect : true
                     })
                 })
@@ -50,21 +46,6 @@ const Signin = () => {
         })
         .catch(err => console.log('signin request failded'));
     }
-
-    const performReDirect = () => {
-        //TODO: do a redirection instead of msg
-        if(didRedirect) {
-            if(user && user.role === '1') {
-                return <p>Redirect to admin</p>
-            } else{
-                return <p>Redirect to user dashboard </p>
-            }
-        }
-
-        if(isAuthenticated()) {
-            return <Redirect to = '/' />
-        }
-    };
 
     const loadingMessage = () => {
         return(
@@ -126,6 +107,21 @@ const Signin = () => {
                 </div>
             </div>
         );
+    }
+
+    const performReDirect = () => {
+        //TODO: do a redirection instead of msg
+        if(didRedirect) {
+            if(user && user.role === 1) {
+                return <p>Redirect to admin dashboard </p>
+            } else{
+                return <p>Redirect to user dashboard </p>
+            }
+        }
+
+        if(isAuthenticated()) {
+            return <Redirect to = '/' />
+        }
     }
 
     return(
