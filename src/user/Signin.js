@@ -39,6 +39,9 @@ const Signin = () => {
                 authenticate(data, ()=> {
                     setValues({
                         ...values,
+                        email : '',
+                        password : '',
+                        error : '',
                         didRedirect : true
                     })
                 })
