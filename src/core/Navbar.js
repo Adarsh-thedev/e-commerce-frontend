@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link, withRouter} from 'react-router-dom';
+import {signout, isAuthenticated} from '../auth/helper/index';
 
 const currentTab = (history, path) => {
 	if(history.location.pathname === path) {
@@ -25,15 +26,27 @@ const Navbar = ({history}) => {
 				<li className = 'nav-item dim'>
 					<Link style={currentTab(history, '/admin/dashboard')} className = 'nav-link' to = '/admin/dashboard'>A.Dashboard</Link>
 				</li>
-				<li className = 'nav-item dim'>
-					<Link style={currentTab(history, '/signup')} className = 'nav-link' to = '/signup'>Signup</Link>
-				</li>
-				<li className = 'nav-item dim'>
-					<Link style={currentTab(history, '/signin')} className = 'nav-link' to = '/signin'>Signin</Link>
-				</li>
-				<li className = 'nav-item dim'>
-					<Link style={currentTab(history, '/signout')} className = 'nav-link' to = '/signout'>Signout</Link>
-				</li>
+				{!isAuthenticated() && (
+					<React.Fragment>
+						<li className = 'nav-item dim'>
+							<Link style={currentTab(history, '/signup')} className = 'nav-link' to = '/signup'>SignUp</Link>
+						</li>
+						<li className = 'nav-item dim'>
+							<Link style={currentTab(history, '/signin')} className = 'nav-link' to = '/signin'>SignIn</Link>
+						</li>
+					</React.Fragment>
+				)}
+				{isAuthenticated() && (
+					<li className = 'nav-item dim'>
+						<span className = 'nav-link pointer' onClick = {()=> {
+							signout(()=> {
+								history.push('/')
+							})
+						}}>
+							Signout
+						</span>
+					</li>
+				)}
 			</ul>
 		</nav>
 	);
