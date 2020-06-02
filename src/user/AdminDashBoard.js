@@ -13,16 +13,16 @@ const AdminDashBoard = () => {
                 <p className = 'card-header bg1 f5 b white'>Admin navigation</p>
                 <ul className = 'list-group'>
                     <li className = 'list-group-item blue'>
-                        <Link to = 'admin/create/category' className = 'nav-link dim'>Create Categories</Link>
+                        <Link to = '/admin/create/category' className = 'nav-link dim'>Create Categories</Link>
                     </li>
                     <li className = 'list-group-item'>
-                        <Link to = 'admin/create/product' className = 'nav-link dim'>Create Products</Link>
+                        <Link to = '/admin/create/product' className = 'nav-link dim'>Create Products</Link>
                     </li>
                     <li className = 'list-group-item'>
-                        <Link to = 'admin/products' className = 'nav-link dim'>Manage Orders</Link>
+                        <Link to = '/admin/products' className = 'nav-link dim'>Manage Orders</Link>
                     </li>
                     <li className = 'list-group-item'>
-                        <Link to = 'admin/orders' className = 'nav-link dim'>Manage Products</Link>
+                        <Link to = '/admin/orders' className = 'nav-link dim'>Manage Products</Link>
                     </li>
                 </ul>
             </div>
