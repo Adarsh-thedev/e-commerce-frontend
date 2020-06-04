@@ -1,23 +1,94 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Base from '../core/Base';
 import {Link} from 'react-router-dom';
+import {getCategories, createProduct} from './helper/adminapicall';
+import {isAuthenticated} from '../auth/helper/index';
 
 const AddProduct = () => {
+
+    const {user, token} = isAuthenticated();
 
     const [values, setValues] = useState({
         name : '',
         description : '',
         price : '',
-        stock : ''
+        stock : '',
+        category : '',
+        categories : [],
+        photo : '',
+        loading : false,
+        error : '',
+        createdProduct : '',
+        getRedirect : false,
+        formData : ''
     });
 
-    const {name, description, price, stock} = values;
+    const {
+        name, 
+        description, 
+        price,
+        stock,
+        category,
+        categories,
+        loading,
+        error,
+        createdProduct,
+        getRedirect,
+        formData
+    } = values;
 
-    const handleChange = name => event => {
-        //
+    const preload = () => {
+        getCategories()
+        .then(data => {
+            //console.table(data);
+            if(data.error) {
+                setValues({
+                    ...values,
+                    error : data.error
+                }); 
+            } else {
+                setValues({
+                    ...values,
+                    categories : data,
+                    formData : new FormData()
+                });
+                //console.log(categories)
+            }
+        })
     }
 
-    const onSubmit = () => {}
+    useEffect(() => {
+        preload();
+    }, []);
+
+    const handleChange = name => event => {
+        const value = name === 'photo' ? event.target.files[0] : event.target.value;
+        formData.set(name, value);
+        setValues({...values, [name] : value});
+    }
+
+    const onSubmit = (event) => {
+        event.preventDefault(); 
+        setValues({...values, error : '', loading : true});
+        createProduct(user._id, token, formData)
+        .then(data => {
+            if(data.error) {
+                setValues({...values, error : data.error})
+            } else {
+                setValues({
+                    ...values,
+                    name : '',
+                    description : '',
+                    price : '',
+                    photo : '',
+                    stock : '',
+                    loading : false,
+                    createdProduct : data.name
+                })                                                                                                                                                                                                                                                                                                  
+            }
+        })
+        .catch(err => console.log(err));
+    }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
 
     const goBack = () => (
         <div className = 'mt3'>
@@ -29,6 +100,22 @@ const AddProduct = () => {
             </Link>
         </div>
     );
+
+    const successMessage = () => {
+      if(createdProduct) {
+          return (
+              <p className = 'f4 center b green'>{createdProduct} Added Successfully!</p>
+          );
+      }
+  }
+
+  const warningMessage = () => {
+    if(error) {
+        return (
+            <div className = 'col col-12 tc'><p className = 'f4 red b'>{error}</p></div>
+        );
+    }
+}
 
     const createProductForm = () => (
         <form className = 'measure center ma3'>
@@ -78,13 +165,15 @@ const AddProduct = () => {
               placeholder="Category"
             >
               <option>Select</option>
-              <option value="a">a</option>
-              <option value="b">b</option>
+              {categories && 
+              categories.map((cate, index)=> (
+                <option key = {index} value={cate._id}>{cate.name}</option>
+              ))}
             </select>
           </div>
           <div className="form-group">
             <input
-              onChange={handleChange("quantity")}
+              onChange={handleChange("stock")}
               type="number"
               className="pa2 input-reset ba bg2 hover-bg-black hover-white w-100 br2"
               placeholder="Quantity"
@@ -110,6 +199,8 @@ const AddProduct = () => {
         >
             <div className = 'col col-md-8 offset-md-2 bg3 br2 shadow-3'>
                 {goBack()}
+                {successMessage()}
+                {warningMessage()}
                 {createProductForm()}
             </div>
         </Base>
