@@ -65,7 +65,7 @@ const ManageProducts = () => {
                             <div className="col-4">
                             <Link
                                 className="btn btn-outline-success br2"
-                                to={`/admin/product/update/productId`}
+                                to={`/admin/product/update/${product._id}`}
                             >
                                 <span className="">Update</span>
                             </Link>
