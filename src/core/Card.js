@@ -1,15 +1,35 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ImageHelper from './helper/ImageHelper';
+import {Redirect} from 'react-router-dom';
+import {addItemToCart} from './helper/cartHelper';
 
 const Card = ({
     product,
-    addToCart = true,
+    AddToCart = true,
     removeFromCart = false
 }) => {
+    const [redirect, setRedirect] = useState(false);
+    //const [count, setCount] = useState(product.count)
+
+    const addToCart = () => {
+        addItemToCart(product, () => {setRedirect(true)});
+    }
+
+    const getRedirect = (redirect) => {
+        if(redirect) {
+            return <Redirect to = '/cart' />
+        }
+    }
+
     const shwoAddTtoCart = () => {
         return(
-            addToCart && (
-                <button className = "tc bg-washed-blue btn btn-block btn-outline-info b dim f6 br2 shadow-2" href="#">Add To Cart</button>
+            AddToCart && (
+                <button 
+                    className = "tc bg-washed-blue btn btn-block btn-outline-info b dim f6 br2 shadow-2"
+                    onClick = {addToCart}
+                >
+                    Add To Cart
+                </button>
             )
         );
     }
@@ -17,7 +37,7 @@ const Card = ({
     const showRemoveFromCart = () => {
         return(
             removeFromCart && (
-                <button className = "tc btn btn-block b btn-outline-danger dim f6 br2 shadow-2" href="#">Remove From Cart</button>
+                <button className = "tc btn btn-block b btn-outline-danger dim f6 br2 shadow-2">Remove From Cart</button>
             )
         );
     }
@@ -30,6 +50,7 @@ const Card = ({
         <section>
             <div className = "card bn mw5 br2 bg-1 shadow-3 tc center grow">
                 <div className = 'card-header bg1 white'>{cardTitle}</div>
+                {getRedirect(redirect)}
                 <ImageHelper product = {product}/>
                 <div className = "pa2 ma1 bt bn">
                     <p className = "card-text bg1 white db">{cardDescription}</p>
