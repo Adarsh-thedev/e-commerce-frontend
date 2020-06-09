@@ -48,7 +48,7 @@ const Card = ({
 
     return(
         <section>
-            <div className = "card bn mw5 br2 bg-1 shadow-3 tc center grow">
+            <div className = "card mt3 bn mw5 br2 bg-1 shadow-3 tc center grow">
                 <div className = 'card-header bg1 white'>{cardTitle}</div>
                 {getRedirect(redirect)}
                 <ImageHelper product = {product}/>
