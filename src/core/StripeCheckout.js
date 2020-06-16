@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {isAuthenticated} from '../auth/helper/index';
-import {emptyCart, loadCart} from './helper/cartHelper';
+//import {emptyCart, loadCart} from './helper/cartHelper';
 import { Link } from 'react-router-dom';
+import StripeCheckoutCard from 'react-stripe-checkout';
 
 const StripeCheckout = ({
     products,
@@ -26,9 +27,25 @@ const StripeCheckout = ({
         return amount;
     }
 
+    const makePayment = (token) => {
+        //
+    }
+
     const showStripeButton = () => {
         return isAuthenticated() ? (
-            <button className = 'btn bg-green b btn-block br2 dim white hover-white mt2'>Pay With Stripe</button>
+            <StripeCheckoutCard
+                name = 'Place your order'
+                token = {makePayment}
+                stripeKey = ''
+                amount={getFinalPrice() * 100} // cents
+                currency="INR"
+                shippingAddress
+                billingAddress
+            >
+                <button className = 'btn bg-green b btn-block br2 dim white hover-white mt2'>
+                    Pay With Stripe
+                </button>
+            </StripeCheckoutCard>
         ) : (
             <Link to = '/signin' className = 'text-decoration-none'>
                 <button className = 'btn b bg1 btn-block br2 dim white hover-white mt2'>Sign In to checkout</button>
