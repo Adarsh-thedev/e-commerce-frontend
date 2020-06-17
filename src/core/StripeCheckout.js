@@ -3,6 +3,7 @@ import {isAuthenticated} from '../auth/helper/index';
 //import {emptyCart, loadCart} from './helper/cartHelper';
 import { Link } from 'react-router-dom';
 import StripeCheckoutCard from 'react-stripe-checkout';
+import {API} from '../Backend.js';
 
 const StripeCheckout = ({
     products,
@@ -28,7 +29,24 @@ const StripeCheckout = ({
     }
 
     const makePayment = (token) => {
-        //
+        const body = {
+            token,
+            products,
+        }
+
+        const headers = {
+            'Content-Type' : 'application/json'
+        }
+
+        return fetch(`${API}/stripepayment`, {
+            method : 'POST',
+            headers : headers,
+            body : JSON.stringify(body)
+        })
+        .then(response => {
+            console.log(response);
+        })
+        .catch(err => console.log(err));
     }
 
     const showStripeButton = () => {
