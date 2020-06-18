@@ -44,7 +44,9 @@ const StripeCheckout = ({
             body : JSON.stringify(body)
         })
         .then(response => {
-            console.log(response);
+            //console.log(response);
+            const {status} = response;
+            console.log('STATUS : ', status);
         })
         .catch(err => console.log(err));
     }
@@ -54,7 +56,7 @@ const StripeCheckout = ({
             <StripeCheckoutCard
                 name = 'Place your order'
                 token = {makePayment}
-                stripeKey = ''
+                stripeKey = 'pk_test_51GvGLoAjBsv7y60vzHsj70WyUaHLNzhowYpfWlH2UE9TLqkDZxLk60ds7uKYJqyeARJfkk208G5m7o8TXsURKBLH00PnUd7xOi'
                 amount={getFinalPrice() * 100} // cents
                 currency="INR"
                 shippingAddress
@@ -73,7 +75,7 @@ const StripeCheckout = ({
 
     return(
         <div>
-            <h3>Stripe Checkout Section {getFinalPrice()}</h3>
+            <h3>Your total amount is INR {getFinalPrice()}</h3>
             {showStripeButton()}
         </div>
     );
