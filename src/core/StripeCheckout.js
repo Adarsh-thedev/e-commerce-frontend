@@ -93,7 +93,7 @@ const StripeCheckout = ({
 
   return (
     <div>
-      <h3>Your total amount is INR {getFinalPrice()}</h3>
+      <p className="f3">Your total amount is ₹{getFinalPrice()}</p>
       {showStripeButton()}
     </div>
   );
