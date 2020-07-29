@@ -13,7 +13,7 @@ const currentTab = (history, path) => {
 const Navbar = ({ history }) => {
   return (
     <nav className="w-100 shadow-5 bg1 navbar">
-      <ul className="nav pa2">
+      <ul className="nav ph1">
         <li className="nav-item dim">
           <Link style={currentTab(history, "/")} className="nav-link" to="/">
             <i className="fa fa-home"></i> Home
