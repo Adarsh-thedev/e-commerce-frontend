@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { isAuthenticated } from "../auth/helper/index";
 import { emptyCart } from "./helper/cartHelper";
 import { Link } from "react-router-dom";
@@ -11,13 +11,6 @@ const StripeCheckout = ({
   setReload = (f) => f,
   reload = undefined,
 }) => {
-  const [data, setData] = useState({
-    loading: false,
-    success: false,
-    error: "",
-    address: "",
-  });
-
   const userToken = isAuthenticated() && isAuthenticated().token;
   const userId = isAuthenticated() && isAuthenticated().user._id;
 
