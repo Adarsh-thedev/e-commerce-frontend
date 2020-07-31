@@ -54,7 +54,23 @@ const UpdateProduct = ({ match }) => {
           stock: data.stock,
           formData: new FormData(),
         });
-        //console.log(categories)
+        preloadCategories();
+      }
+    });
+  };
+
+  const preloadCategories = () => {
+    getCategories().then((data) => {
+      if (data.error) {
+        setValues({
+          ...values,
+          error: data.error,
+        });
+      } else {
+        setValues({
+          categories: data,
+          formData: new FormData(),
+        });
       }
     });
   };
@@ -72,7 +88,7 @@ const UpdateProduct = ({ match }) => {
   const onSubmit = (event) => {
     event.preventDefault();
     setValues({ ...values, error: "", loading: true });
-    updateProduct(user._id, token, formData)
+    updateProduct(match.params.productId, user._id, token, formData)
       .then((data) => {
         if (data.error) {
           setValues({ ...values, error: data.error });
@@ -204,7 +220,7 @@ const UpdateProduct = ({ match }) => {
         onClick={onSubmit}
         className="btn bg1 dim mb-3 br2 w-100"
       >
-        Create Product
+        Update Product
       </button>
     </form>
   );
